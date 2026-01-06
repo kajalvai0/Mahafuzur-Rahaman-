@@ -7,6 +7,12 @@
     <title>জনতার মাহফুজ | জাতীয় সংসদ নির্বাচন ২০২৬</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      // Shim process.env for browser environment to prevent ReferenceErrors
+      if (typeof window.process === 'undefined') {
+        window.process = { env: {} };
+      }
+    </script>
     <style>
       body {
         font-family: 'Hind Siliguri', sans-serif;
@@ -56,5 +62,7 @@
 </head>
   <body class="bg-slate-50 text-slate-900 overflow-x-hidden">
     <div id="root"></div>
+    <!-- Entry point for the application -->
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>

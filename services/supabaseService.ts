@@ -8,7 +8,7 @@ import { CampaignData } from '../types';
  * keys as defaults for this specific project implementation.
  */
 const SUPABASE_URL = (process.env as any)?.SUPABASE_URL || 'https://tfisprkzkodixbsuxekd.supabase.co';
-const SUPABASE_ANON_KEY = (process.env as any)?.SUPABASE_ANON_KEY || 'sb_publishable_HzOjIOqG8nmGPkM0ugkwXA_';
+const SUPABASE_ANON_KEY = (process.env as any)?.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
 
 const LOCAL_STORAGE_KEY = 'mpsmart_campaign_data_fallback';
 

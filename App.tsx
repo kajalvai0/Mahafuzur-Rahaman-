@@ -71,11 +71,20 @@ const App: React.FC = () => {
   const [campaignData, setCampaignData] = useState<CampaignData>(DEFAULT_CAMPAIGN_DATA);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
     const load = async () => {
-      const data = await fetchCampaignData();
-      if (data) setCampaignData(data);
+      try {
+        const data = await fetchCampaignData();
+        if (data) {
+          setCampaignData(data);
+        }
+      } catch (e) {
+        console.error("Critical error loading data:", e);
+      } finally {
+        setIsDataLoaded(true);
+      }
       
       const savedUser = localStorage.getItem('mpsmart_user');
       if (savedUser) setCurrentUser(JSON.parse(savedUser));
@@ -102,6 +111,14 @@ const App: React.FC = () => {
     localStorage.removeItem('mpsmart_user');
     setCurrentView(AppView.HOME);
   };
+
+  if (!isDataLoaded) {
+    return (
+      <div className="min-h-screen bg-slate-300 flex items-center justify-center">
+        <div className="text-emerald-900 font-bold animate-pulse">লোড হচ্ছে...</div>
+      </div>
+    );
+  }
 
   const renderContent = () => {
     switch (currentView) {

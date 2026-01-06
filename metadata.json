@@ -1,0 +1,10 @@
+{
+  "name": "জনতার মাহফুজ: স্মার্ট প্রতিনিধি",
+  "description": "মাওলানা মাহফুজুর রহমান-এর স্মার্ট নির্বাচনী প্রচারণা ও জনসেবা অ্যাপ্লিকেশন।",
+  "profileImage": "https://raw.githubusercontent.com/mdmahmuduzzaman/maulana-mahfuzur-rahman/main/maulana-mahfuzur-rahman.jpg",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

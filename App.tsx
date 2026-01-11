@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { TopBar, BottomNav } from './components/Navigation';
 import { Hero } from './components/Hero';
@@ -37,32 +36,15 @@ const DEFAULT_CAMPAIGN_DATA: CampaignData = {
     { 
       id: '1', 
       title: 'বিশাল জনসভা - মহাদেবপুর উপজেলা সদর', 
-      date: '২০ মে ২০২৬', 
+      date: '২০ জানুয়ারি ২০২৬', 
       location: 'মহাদেবপুর পাবলিক হল মাঠ', 
       description: 'হাজার হাজার তৌহিদী জনতার উপস্থিতিতে ইনসাফ কায়েমের শপথ এবং নির্বাচনী দিকনির্দেশনা প্রদান করা হয়।', 
       image: 'https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&q=80&w=1200' 
-    },
-    { 
-      id: '2', 
-      title: 'বদলগাছি বাজার পথসভা ও গণসংযোগ', 
-      date: '২১ মে ২০২৬', 
-      location: 'বদলগাছি চৌরাস্তা', 
-      description: 'ব্যবসায়ী ও সাধারণ পথচারীদের সাথে কুশল বিনিময় এবং নির্বাচনী ইশতেহার সম্বলিত লিফলেট বিতরণ।', 
-      image: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?auto=format&fit=crop&q=80&w=1200' 
-    },
-    { 
-      id: '3', 
-      title: 'তরুণ প্রজন্মের সাথে ডিজিটাল বাংলাদেশ ও কর্মসংস্থান মতবিনিময়', 
-      date: '২২ মে ২০২৬', 
-      location: 'বদলগাছি আইটি সেন্টার', 
-      description: 'এলাকার শিক্ষিত বেকারদের ফ্রিল্যান্সিং ও কারিগরি শিক্ষার মাধ্যমে দক্ষ করে গড়ে তোলার প্রতিশ্রুতি প্রদান।', 
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200' 
     }
   ],
   manifesto: [
     { id: '1', title: "ইনসাফ কায়েম ও সুশাসন", color: "#059669", description: "আইনের শাসন প্রতিষ্ঠা এবং প্রতিটি নাগরিকের জান-মালের নিরাপত্তা নিশ্চিত করা।" },
-    { id: '2', title: "দুর্নীতিমুক্ত বাংলাদেশ", color: "#047857", description: "রাষ্ট্রের সকল স্তরে স্বচ্ছতা ও জবাবদিহিতা নিশ্চিত করে দুর্নীতি সমূলে উৎপাটন।" },
-    { id: '3', title: "সুদমুক্ত অর্থনীতি", color: "#065f46", description: "ইসলামী যাকাত ও উশর ভিত্তিক একটি শোষণমুক্ত অর্থনৈতিক ব্যবস্থা প্রবর্তন।" }
+    { id: '2', title: "দুর্নীতিমুক্ত বাংলাদেশ", color: "#047857", description: "রাষ্ট্রের সকল স্তরে স্বচ্ছতা ও জবাবদিহিতা নিশ্চিত করে দুর্নীতি সমূলে উৎপাটন।" }
   ]
 };
 
@@ -81,13 +63,19 @@ const App: React.FC = () => {
           setCampaignData(data);
         }
       } catch (e) {
-        console.error("Critical error loading data:", e);
+        console.error("Data loading failed, continuing with defaults:", e);
       } finally {
         setIsDataLoaded(true);
       }
       
       const savedUser = localStorage.getItem('mpsmart_user');
-      if (savedUser) setCurrentUser(JSON.parse(savedUser));
+      if (savedUser) {
+        try {
+          setCurrentUser(JSON.parse(savedUser));
+        } catch (e) {
+          localStorage.removeItem('mpsmart_user');
+        }
+      }
     };
     load();
   }, []);
@@ -114,7 +102,8 @@ const App: React.FC = () => {
 
   if (!isDataLoaded) {
     return (
-      <div className="min-h-screen bg-slate-300 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-300 flex flex-col items-center justify-center">
+        <div className="w-12 h-12 border-4 border-emerald-800 border-t-transparent rounded-full animate-spin mb-4"></div>
         <div className="text-emerald-900 font-bold animate-pulse">লোড হচ্ছে...</div>
       </div>
     );
@@ -122,34 +111,19 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (currentView) {
-      case AppView.HOME:
-        return <Hero setView={setCurrentView} data={campaignData} />;
-      case AppView.CHAT:
-        return <ChatInterface instruction={campaignData.aiInstruction} />;
-      case AppView.MANIFESTO:
-        return <Manifesto data={campaignData.manifesto} />;
-      case AppView.ISSUES:
-        return <IssueReporter />;
-      case AppView.SERVICES:
-        return <Services setView={setCurrentView} />;
-      case AppView.VOLUNTEER:
-        return <VolunteerForm />;
-      case AppView.MP_PROFILE:
-        return <MPProfile data={campaignData} />;
-      case AppView.LOGIN:
-        return <Login onLogin={handleLogin} />;
+      case AppView.HOME: return <Hero setView={setCurrentView} data={campaignData} />;
+      case AppView.CHAT: return <ChatInterface instruction={campaignData.aiInstruction} />;
+      case AppView.MANIFESTO: return <Manifesto data={campaignData.manifesto} />;
+      case AppView.ISSUES: return <IssueReporter />;
+      case AppView.SERVICES: return <Services setView={setCurrentView} />;
+      case AppView.VOLUNTEER: return <VolunteerForm />;
+      case AppView.MP_PROFILE: return <MPProfile data={campaignData} />;
+      case AppView.LOGIN: return <Login onLogin={handleLogin} />;
       case AppView.ADMIN:
-        return (
-          currentUser?.role === 'admin' ? (
-            <AdminPanel 
-              data={campaignData} 
-              onUpdate={handleUpdateData} 
-              onBack={() => setCurrentView(AppView.HOME)}
-            />
-          ) : <Hero setView={setCurrentView} data={campaignData} />
-        );
-      default:
-        return <Hero setView={setCurrentView} data={campaignData} />;
+        return currentUser?.role === 'admin' 
+          ? <AdminPanel data={campaignData} onUpdate={handleUpdateData} onBack={() => setCurrentView(AppView.HOME)} />
+          : <Hero setView={setCurrentView} data={campaignData} />;
+      default: return <Hero setView={setCurrentView} data={campaignData} />;
     }
   };
 
@@ -174,11 +148,7 @@ const App: React.FC = () => {
         <main className="flex-1 overflow-y-auto bg-slate-200 no-scrollbar relative">
           {renderContent()}
           {currentView !== AppView.CHAT && (
-            <Footer 
-              setView={setCurrentView} 
-              candidateName={campaignData.candidateName} 
-              constituency={campaignData.constituency} 
-            />
+            <Footer setView={setCurrentView} candidateName={campaignData.candidateName} constituency={campaignData.constituency} />
           )}
         </main>
         <BottomNav currentView={currentView} setView={setCurrentView} />
@@ -187,10 +157,6 @@ const App: React.FC = () => {
       <div className="hidden lg:block fixed left-10 top-1/2 -translate-y-1/2 max-w-xs space-y-4">
         <h1 className="text-4xl font-extrabold text-emerald-900 leading-tight">জনতার মাহফুজ ২০২৬</h1>
         <p className="text-slate-700">বাংলাদেশ জামায়াতে ইসলামী মনোনীত প্রার্থীর ডিজিটাল নির্বাচনী পোর্টাল।</p>
-        <div className="flex gap-2">
-            <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">ইনসাফ</span>
-            <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">সুশাসন</span>
-        </div>
       </div>
     </div>
   );

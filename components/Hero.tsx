@@ -113,7 +113,8 @@ export const Hero: React.FC<HeroProps> = ({ setView, data }) => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
 
   useEffect(() => {
-    const targetDate = new Date('2026-01-05T00:00:00').getTime();
+    // লক্ষ্যমাত্রা তারিখ: ১২ই ফেব্রুয়ারি ২০২৬
+    const targetDate = new Date('2026-02-12T00:00:00').getTime();
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate - now;

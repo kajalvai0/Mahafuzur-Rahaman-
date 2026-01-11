@@ -1,20 +1,34 @@
+
 import React, { useState } from 'react';
-import { Camera, MapPin, CheckCircle } from 'lucide-react';
+import { Camera, MapPin, CheckCircle, AlertTriangle, Send, Loader2 } from 'lucide-react';
 
 export const IssueReporter: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    // Simulate API call
+    setTimeout(() => {
+      setLoading(false);
+      setSubmitted(true);
+    }, 1500);
+  };
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center h-[60vh] p-6 text-center animate-fade-in">
-        <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-6">
-          <CheckCircle size={40} />
+      <div className="flex flex-col items-center justify-center h-[70vh] p-8 text-center animate-in fade-in zoom-in duration-500">
+        <div className="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-8 shadow-inner">
+          <CheckCircle size={48} className="animate-bounce" />
         </div>
-        <h2 className="text-2xl font-bold text-slate-800 mb-2">রিপোর্ট জমা হয়েছে!</h2>
-        <p className="text-slate-500 mb-6">আপনার এলাকার সমস্যাটি আমাদের ডাটাবেসে যুক্ত হয়েছে। শীঘ্রই স্বেচ্ছাসেবক টিম এটি যাচাই করবে।</p>
+        <h2 className="text-3xl font-black text-slate-800 mb-4">রিপোর্ট সফলভাবে জমা হয়েছে!</h2>
+        <p className="text-slate-600 mb-8 leading-relaxed font-medium">
+          আপনার এলাকার সমস্যাটি আমাদের কেন্দ্রীয় কন্ট্রোল রুমে পাঠানো হয়েছে। আমাদের স্বেচ্ছাসেবক টিম খুব শীঘ্রই এটি যাচাই করে ব্যবস্থা গ্রহণ করবে। ইনশাআল্লাহ।
+        </p>
         <button 
           onClick={() => setSubmitted(false)}
-          className="text-emerald-600 font-semibold hover:underline"
+          className="bg-emerald-700 text-white px-8 py-4 rounded-2xl font-black shadow-xl active:scale-95 transition-all flex items-center gap-2"
         >
           আরেকটি সমস্যা জানান
         </button>
@@ -23,66 +37,95 @@ export const IssueReporter: React.FC = () => {
   }
 
   return (
-    <div className="p-4 space-y-6 pb-24">
-      <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-lg">
-        <h2 className="font-bold text-emerald-800 text-lg">আমার এলাকা, আমার সমস্যা</h2>
-        <p className="text-sm text-emerald-600/80">রাস্তাঘাট, ড্রেনেজ বা অন্য সমস্যা ছবিসহ জানান।</p>
+    <div className="p-4 space-y-6 pb-28 animate-in slide-in-from-bottom-4 duration-700">
+      <div className="bg-gradient-to-br from-red-500 to-red-700 p-6 rounded-[32px] text-white shadow-xl shadow-red-100 relative overflow-hidden">
+        <div className="relative z-10">
+            <h2 className="font-black text-xl mb-1 flex items-center gap-2">
+                <AlertTriangle size={24} className="text-yellow-300" /> এলাকা সংস্কারের ডাক
+            </h2>
+            <p className="text-xs text-red-50 font-medium opacity-90">আপনার এলাকার যেকোনো জনদুর্ভোগের কথা আমাদের জানান। আমরা আপনার কণ্ঠস্বর হবো।</p>
+        </div>
+        <div className="absolute -right-8 -bottom-8 text-white/10 rotate-12">
+            <AlertTriangle size={120} />
+        </div>
       </div>
 
-      <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">সমস্যার ধরণ</label>
-          <select className="w-full p-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none text-sm">
+      <form className="space-y-5 bg-white p-6 rounded-[32px] shadow-sm border border-slate-200" onSubmit={handleSubmit}>
+        <div className="space-y-2">
+          <label className="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">সমস্যার ধরণ</label>
+          <select className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none text-sm font-bold appearance-none cursor-pointer">
             <option>রাস্তা সংস্কার প্রয়োজন</option>
-            <option>ড্রেনেজ সমস্যা</option>
-            <option>বিদ্যুৎ সমস্যা</option>
-            <option>বিশুদ্ধ পানির অভাব</option>
+            <option>ড্রেনেজ ও পয়ঃনিষ্কাশন সমস্যা</option>
+            <option>বিদ্যুৎ বিভ্রাট/ল্যাম্পপোস্ট</option>
+            <option>বিশুদ্ধ পানির সংকট</option>
+            <option>মাদক বা সামাজিক অবক্ষয়</option>
             <option>অন্যান্য</option>
           </select>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">বিস্তারিত লিখুন</label>
+        <div className="space-y-2">
+          <label className="text-xs font-black text-slate-500 uppercase tracking-widest ml-1">বিস্তারিত তথ্য</label>
           <textarea 
+            required
             rows={4} 
-            placeholder="কোথায় সমস্যা? কতদিন ধরে? বিস্তারিত..."
-            className="w-full p-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none text-sm resize-none"
+            placeholder="সমস্যার সঠিক স্থান এবং বিস্তারিত এখানে লিখুন..."
+            className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none text-sm resize-none placeholder-slate-400 font-medium"
           ></textarea>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <button type="button" className="flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed border-slate-300 rounded-xl text-slate-500 hover:border-emerald-500 hover:text-emerald-600 transition-colors bg-white">
+          <button type="button" className="flex flex-col items-center justify-center gap-2 p-5 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 hover:border-emerald-500 hover:text-emerald-700 transition-all bg-slate-50/50 hover:bg-emerald-50 active:scale-95">
             <Camera size={24} />
-            <span className="text-xs font-medium">ছবি তুলুন</span>
+            <span className="text-[10px] font-black uppercase tracking-wider">ছবি যোগ করুন</span>
           </button>
           
-          <button type="button" className="flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed border-slate-300 rounded-xl text-slate-500 hover:border-emerald-500 hover:text-emerald-600 transition-colors bg-white">
+          <button type="button" className="flex flex-col items-center justify-center gap-2 p-5 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 hover:border-blue-500 hover:text-blue-700 transition-all bg-slate-50/50 hover:bg-blue-50 active:scale-95">
             <MapPin size={24} />
-            <span className="text-xs font-medium">লোকেশন</span>
+            <span className="text-[10px] font-black uppercase tracking-wider">বর্তমান লোকেশন</span>
           </button>
         </div>
 
         <button 
           type="submit" 
-          className="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-emerald-700 transition-colors mt-4"
+          disabled={loading}
+          className="w-full bg-emerald-700 text-white font-black py-4 rounded-2xl shadow-xl shadow-emerald-100 hover:bg-emerald-800 transition-all active:scale-95 flex items-center justify-center gap-2 mt-4"
         >
-          রিপোর্ট জমা দিন
+          {loading ? (
+            <>
+              <Loader2 size={20} className="animate-spin" />
+              <span>জমা হচ্ছে...</span>
+            </>
+          ) : (
+            <>
+              <Send size={18} />
+              <span>রিপোর্ট জমা দিন</span>
+            </>
+          )}
         </button>
       </form>
 
-      {/* Commitment Tracker Preview */}
-      <div className="mt-8">
-        <h3 className="font-bold text-slate-700 mb-3 px-1">Commitment Tracker</h3>
-        <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-            <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-semibold bg-blue-50 text-blue-600 px-2 py-1 rounded">প্রক্রিয়াধীন</span>
-                <span className="text-xs text-slate-400">২ দিন আগে</span>
+      {/* Activity Tracker */}
+      <div className="space-y-4">
+        <h3 className="font-black text-slate-800 text-xs uppercase tracking-[0.2em] px-2">সম্প্রতি সমাধানকৃত</h3>
+        <div className="space-y-4">
+            <div className="bg-white p-5 rounded-[28px] shadow-sm border border-slate-200 flex items-center gap-4">
+                <div className="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center shrink-0">
+                    <CheckCircle size={24} />
+                </div>
+                <div>
+                    <h4 className="font-bold text-sm text-slate-800">মহাদেবপুর বাজার ড্রেন পরিষ্কার</h4>
+                    <p className="text-[10px] text-slate-500 font-medium">১০ জন স্বেচ্ছাসেবক কাজ সম্পন্ন করেছেন</p>
+                </div>
             </div>
-            <h4 className="font-medium text-slate-800">বদলগাছি ব্রিজের ল্যাম্পপোস্ট মেরামত</h4>
-            <div className="w-full bg-slate-100 h-2 rounded-full mt-3 overflow-hidden">
-                <div className="bg-blue-500 h-full w-2/3"></div>
+            <div className="bg-white p-5 rounded-[28px] shadow-sm border border-slate-200 flex items-center gap-4 opacity-70">
+                <div className="w-12 h-12 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center shrink-0">
+                    <Loader2 size={24} className="animate-spin" />
+                </div>
+                <div>
+                    <h4 className="font-bold text-sm text-slate-800">বদলগাছি-মহাদেবপুর রাস্তা সার্ভে</h4>
+                    <p className="text-[10px] text-slate-500 font-medium">তদন্ত রিপোর্ট প্রক্রিয়াধীন...</p>
+                </div>
             </div>
-            <p className="text-xs text-slate-500 mt-1">স্বেচ্ছাসেবক টিম কাজ করছে...</p>
         </div>
       </div>
     </div>

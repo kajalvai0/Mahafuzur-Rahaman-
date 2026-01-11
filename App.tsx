@@ -63,7 +63,7 @@ const App: React.FC = () => {
           setCampaignData(data);
         }
       } catch (e) {
-        console.error("Data loading failed, continuing with defaults:", e);
+        console.error("Initial load issue, using defaults:", e);
       } finally {
         setIsDataLoaded(true);
       }

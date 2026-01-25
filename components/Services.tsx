@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Heart, Phone, Users, Droplet, Briefcase, Cpu, GraduationCap, Banknote, ChevronRight, Sparkles, CheckCircle } from 'lucide-react';
 import { AppView } from '../types';

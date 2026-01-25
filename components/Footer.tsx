@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Facebook, Twitter, Youtube, Mail, Phone, MapPin, Scale, Heart } from 'lucide-react';
 import { AppView } from '../types';

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { CampaignData, DailyCampaignItem, ManifestoItem } from '../types';
 import { Save, Plus, Trash2, Layout, Image, FileText, Bot, Newspaper, MapPin, Upload, Facebook, Twitter, Youtube } from 'lucide-react';

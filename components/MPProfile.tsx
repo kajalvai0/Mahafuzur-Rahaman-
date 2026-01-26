@@ -1,4 +1,3 @@
-'use client';
 
 import React from 'react';
 import { CampaignData } from '../types';
@@ -34,12 +33,8 @@ export const MPProfile: React.FC<MPProfileProps> = ({ data }) => {
       <div className="relative">
          <div className="h-40 bg-emerald-700 rounded-3xl w-full"></div>
          <div className="absolute -bottom-12 left-1/2 -translate-x-1/2">
-            <div className="w-32 h-32 rounded-3xl border-4 border-white overflow-hidden shadow-2xl bg-white flex items-center justify-center">
-               {data.profileImage ? (
-                 <img src={data.profileImage || "/placeholder.svg"} alt={data.candidateName} className="w-full h-full object-cover" />
-               ) : (
-                 <span className="text-4xl font-bold text-emerald-600">{data.candidateName?.charAt(0) || 'M'}</span>
-               )}
+            <div className="w-32 h-32 rounded-3xl border-4 border-white overflow-hidden shadow-2xl bg-white">
+               <img src={data.profileImage} alt={data.candidateName} className="w-full h-full object-cover" />
             </div>
          </div>
          {/* Share Button Overlay */}

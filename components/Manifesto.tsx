@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { ChevronDown, ChevronUp, ShieldCheck, Scale, Leaf, BookOpen, Users, Wallet, Sparkles } from 'lucide-react';

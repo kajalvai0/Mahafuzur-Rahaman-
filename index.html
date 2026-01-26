@@ -2,17 +2,15 @@
 <html lang="bn">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>জনতার মাহফুজ | জাতীয় সংসদ নির্বাচন ২০২৬</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-      window.process = window.process || { env: {} };
-    </script>
     <style>
       body {
         font-family: 'Hind Siliguri', sans-serif;
-        background-color: #f8fafc;
+        background-color: #cbd5e1;
+        touch-action: manipulation;
       }
       .glass-card {
         background: rgba(255, 255, 255, 0.9);
@@ -20,7 +18,17 @@
         border: 1px solid rgba(255, 255, 255, 0.2);
       }
       .election-gradient {
-        background: linear-gradient(135deg, #065f46 0%, #064e3b 100%);
+        background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom);
       }
       @keyframes float {
         0% { transform: translateY(0px); }
@@ -30,36 +38,25 @@
       .float-animation {
         animation: float 3s ease-in-out infinite;
       }
-      .side-menu-overlay {
-        background: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(4px);
-      }
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
     </style>
   <script type="importmap">
 {
   "imports": {
-    "recharts": "https://esm.sh/recharts@^3.6.0",
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.89.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "vite": "https://esm.sh/vite@^7.3.0",
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.90.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
 </head>
-  <body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+  <body class="bg-slate-300 text-slate-900 overflow-x-hidden select-none">
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
